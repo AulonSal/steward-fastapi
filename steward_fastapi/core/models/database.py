@@ -5,14 +5,14 @@ from zoneinfo import ZoneInfo
 
 
 class ContentSource(Model):
-    name = fields.CharField(max_length=50, unique=True)
+    name = fields.CharField(max_length=50, pk=True)
 
     def __repr__(self):
         return self.name
 
 
 class ContentType(Model):
-    name = fields.CharField(max_length=50, unique=True)
+    name = fields.CharField(max_length=50, pk=True)
 
     def __repr__(self):
         return self.name
