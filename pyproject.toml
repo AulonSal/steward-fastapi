@@ -6,11 +6,11 @@ authors = ["AulonSal <aulonsal@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-tortoise-orm = {extras = ["accel"], version = "^0.16.21"}
 fastapi = {extras = ["all"], version = "^0.63.0"}
 uvicorn = "^0.13.3"
 asyncpg = "^0.22.0"
 aerich = {path = "dist/aerich-0.5.1.tar.gz"}
+tortoise-orm = "^0.16.21"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

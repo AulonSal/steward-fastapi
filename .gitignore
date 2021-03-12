@@ -149,3 +149,5 @@ setup
 # Prod runner
 run_prod.py
 
+# Virtual Environment to copy
+env
