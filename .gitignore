@@ -146,3 +146,6 @@ config.py
 # Setup
 setup
 
+# Prod runner
+run_prod.py
+

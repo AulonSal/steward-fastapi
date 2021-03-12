@@ -9,7 +9,6 @@ python = "^3.9"
 tortoise-orm = {extras = ["accel"], version = "^0.16.21"}
 fastapi = {extras = ["all"], version = "^0.63.0"}
 uvicorn = "^0.13.3"
-Hypercorn = {extras = ["trio"], version = "^0.11.2"}
 asyncpg = "^0.22.0"
 aerich = {path = "dist/aerich-0.5.1.tar.gz"}
 
