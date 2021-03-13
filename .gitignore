@@ -128,17 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Aerich config
-aerich.ini
-
 # Intellij IDEs
 .idea
 
 # Vim
 .vim
-
-# Aerich Migrations
-migrations
 
 # Config
 config.py

@@ -1,0 +1,20 @@
+-- upgrade --
+CREATE TABLE IF NOT EXISTS "contentsource" (
+    "name" VARCHAR(50) NOT NULL  PRIMARY KEY
+);
+CREATE TABLE IF NOT EXISTS "contenttype" (
+    "name" VARCHAR(50) NOT NULL  PRIMARY KEY
+);
+CREATE TABLE IF NOT EXISTS "content" (
+    "meta" TEXT,
+    "url" TEXT NOT NULL,
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "source_id" VARCHAR(50) NOT NULL REFERENCES "contentsource" ("name") ON DELETE CASCADE,
+    "type_id" VARCHAR(50) NOT NULL REFERENCES "contenttype" ("name") ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS "aerich" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "version" VARCHAR(255) NOT NULL,
+    "app" VARCHAR(20) NOT NULL,
+    "content" TEXT NOT NULL
+);
