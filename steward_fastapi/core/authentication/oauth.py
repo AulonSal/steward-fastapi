@@ -79,7 +79,7 @@ async def get_current_active_agent(current_agent: Agent = Depends(get_current_ag
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Inactive agent')
         return current_agent
 
-async def create_new_agent(username: str, password: str, disabled: Optional[bool] = None):
+async def create_new_active_agent(username: str, password: str, disabled: Optional[bool] = None):
     hashed_password = hash_password(password)
     return await AgentDB.create(
             hashed_password=hashed_password,
