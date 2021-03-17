@@ -1,7 +1,7 @@
+# from zoneinfo import ZoneInfo
+
+from tortoise import fields, timezone
 from tortoise.models import Model
-from tortoise import fields, Tortoise, timezone
-from datetime import datetime
-from zoneinfo import ZoneInfo
 
 
 class ContentSource(Model):
@@ -10,12 +10,18 @@ class ContentSource(Model):
     def __repr__(self):
         return self.name
 
+    class PydanticMeta:
+        backward_relations = False
+
 
 class ContentType(Model):
     name = fields.CharField(max_length=50, pk=True)
 
     def __repr__(self):
         return self.name
+
+    class PydanticMeta:
+        backward_relations = False
 
 
 class Content(Model):

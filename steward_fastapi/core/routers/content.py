@@ -1,25 +1,26 @@
 # from enum import Enum
 # from typing import Optional
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-import steward_fastapi.core.models.validation as data
 import steward_fastapi.core.models.database as db
+import steward_fastapi.core.models.validation as data
+from steward_fastapi.core.authentication import oauth2_scheme
 
 router = APIRouter()
 
 @router.post("/type", response_model=data.ContentType)
-async def add_type(type_: data.ContentTypeIn):
+async def add_type(type_: data.ContentTypeIn, token: str = Depends(oauth2_scheme)):
     type_in_db = await db.ContentType.create(**type_.dict())
     return await data.ContentType.from_tortoise_orm(type_in_db)
 
 @router.post("/source", response_model=data.ContentSource)
-async def add_source(source: data.ContentSourceIn):
+async def add_source(source: data.ContentSourceIn, token: str = Depends(oauth2_scheme)):
     source_in_db = await db.ContentSource.create(**source.dict())
     return await data.ContentSource.from_tortoise_orm(source_in_db)
 
 #TODO: Refine this, check what a pydantic constructor does
 @router.post("/", response_model=data.Content)
-async def add_content(content: data.ContentIn):
+async def add_content(content: data.ContentIn, token: str = Depends(oauth2_scheme)):
     print(content)
     new_content = { k: v for k, v in content.dict().items() if 'id' not in k}
     new_content['type'] = await db.ContentType.get_or_create(name=content.dict()['type_id'])
