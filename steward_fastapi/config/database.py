@@ -39,7 +39,7 @@ CONFIG = {
             'models':
                 {
                     'models': DB_MODELS,
-                    'default_connection': 'default',
+                    'default_connection': 'postgres',
                 },
         },
     'use_tz': USE_TIMEZONE,
