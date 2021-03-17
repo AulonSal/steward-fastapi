@@ -1,7 +1,7 @@
-import uvicorn
-
 import asyncio
-from tortoise import run_async, Tortoise
+
+import uvicorn
+from tortoise import Tortoise, run_async
 
 from main import app
 

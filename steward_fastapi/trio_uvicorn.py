@@ -1,7 +1,7 @@
-import uvicorn
 import trio_asyncio
+import uvicorn
 
-from .main  import app
+from .main import app
 from .run_uvicorn import CONFIG
 
 if __name__ == "__main__":

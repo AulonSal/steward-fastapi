@@ -1,13 +1,13 @@
 import asyncio
-import pytest
-
 from typing import Generator
 
+import pytest
 from fastapi.testclient import TestClient
 from tortoise.contrib.test import finalizer, initializer
 
-from steward_fastapi.main import app
 from steward_fastapi.core.models.database import ContentType
+from steward_fastapi.main import app
+
 
 @pytest.fixture(scope="module")
 def client() -> Generator:
