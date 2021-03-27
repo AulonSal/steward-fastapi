@@ -38,7 +38,7 @@ class Content(Model):
             to_field='name',
             related_name='content',
         )
-    url = fields.TextField()
+    url = fields.CharField(max_length=300, unique=True)
     # TODO: Fix pydantic_model_creator error with default factory
     # date = fields.DatetimeField(default=timezone.now)
 

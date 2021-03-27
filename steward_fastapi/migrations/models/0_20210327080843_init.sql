@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS "contenttype" (
 );
 CREATE TABLE IF NOT EXISTS "content" (
     "meta" TEXT,
-    "url" TEXT NOT NULL,
+    "url" VARCHAR(300) NOT NULL UNIQUE,
     "id" SERIAL NOT NULL PRIMARY KEY,
-    "source_id" VARCHAR(50) NOT NULL REFERENCES "contentsource" ("name") ON DELETE CASCADE,
-    "type_id" VARCHAR(50) NOT NULL REFERENCES "contenttype" ("name") ON DELETE CASCADE
+    "type_id" VARCHAR(50) NOT NULL REFERENCES "contenttype" ("name") ON DELETE CASCADE,
+    "source_id" VARCHAR(50) NOT NULL REFERENCES "contentsource" ("name") ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS "aerich" (
     "id" SERIAL NOT NULL PRIMARY KEY,
