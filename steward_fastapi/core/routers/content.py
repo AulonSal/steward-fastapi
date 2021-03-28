@@ -1,6 +1,8 @@
 # from enum import Enum
 # from typing import Optional
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
+from fastapi.exceptions import HTTPException
+from tortoise.exceptions import IntegrityError
 
 import steward_fastapi.core.models.database as db
 import steward_fastapi.core.models.validation as data
@@ -10,12 +12,12 @@ router = APIRouter()
 
 @router.post("/type", response_model=data.ContentType)
 async def add_type(type_: data.ContentTypeIn, token: str = Depends(oauth2_scheme)):
-    type_in_db = await db.ContentType.create(**type_.dict())
+    type_in_db, _ = await db.ContentType.get_or_create(**type_.dict())
     return await data.ContentType.from_tortoise_orm(type_in_db)
 
 @router.post("/source", response_model=data.ContentSource)
 async def add_source(source: data.ContentSourceIn, token: str = Depends(oauth2_scheme)):
-    source_in_db = await db.ContentSource.create(**source.dict())
+    source_in_db, _ = await db.ContentSource.get_or_create(**source.dict())
     return await data.ContentSource.from_tortoise_orm(source_in_db)
 
 #TODO: Refine this, check what a pydantic constructor does
@@ -23,9 +25,12 @@ async def add_source(source: data.ContentSourceIn, token: str = Depends(oauth2_s
 async def add_content(content: data.ContentIn, token: str = Depends(oauth2_scheme)):
     print(content)
     new_content = { k: v for k, v in content.dict().items() if 'id' not in k}
-    new_content['type'] = await db.ContentType.get_or_create(name=content.dict()['type_id'])
-    new_content['source'] = await db.ContentSource.get_or_create(name=content.dict()['source_id'])
-    content_in_db = await db.Content.create(**content.dict())
+    new_content['type'], _ = await db.ContentType.get_or_create(name=content.dict()['type_id'])
+    new_content['source'], _ = await db.ContentSource.get_or_create(name=content.dict()['source_id'])
+    try:
+        content_in_db = await db.Content.create(**content.dict())
+    except IntegrityError as e:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail='Content Already Exists') from e
     return await data.Content.from_tortoise_orm(content_in_db)
 
 @router.get("/", response_model=list[data.Content])
@@ -39,6 +44,7 @@ async def get_types():
 @router.get("/source", response_model=list[data.ContentSource])
 async def get_sources():
     return await data.ContentSource.from_queryset(db.ContentSource.all())
+
 
 # @router.get("/items/{item_id}")
 # async def read_item(item_id: int):
