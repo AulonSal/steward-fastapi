@@ -15,6 +15,8 @@ CONFIG = dict(
     )
 
 if __name__ == '__main__':
-    uvicorn.run(**CONFIG)
-    run_async(Tortoise.close_connections())
+    try:
+        uvicorn.run(**CONFIG)
+    except:
+        run_async(Tortoise.close_connections())
 
