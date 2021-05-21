@@ -33,15 +33,15 @@ async def add_content(content: data.ContentIn, token: str = Depends(oauth2_schem
     return await data.Content.from_tortoise_orm(content_in_db)
 
 @router.get("/", response_model=list[data.ContentOut])
-async def get_content():
+async def get_content(token: str = Depends(oauth2_scheme)):
     return await data.ContentOut.from_queryset(db.Content.all())
 
 @router.get("/type", response_model=list[data.ContentType])
-async def get_types():
+async def get_types(token: str = Depends(oauth2_scheme)):
     return await data.ContentType.from_queryset(db.ContentType.all())
 
 @router.get("/source", response_model=list[data.ContentSource])
-async def get_sources():
+async def get_sources(token: str = Depends(oauth2_scheme)):
     return await data.ContentSource.from_queryset(db.ContentSource.all())
 
 

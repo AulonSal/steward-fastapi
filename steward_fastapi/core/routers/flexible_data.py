@@ -12,6 +12,6 @@ async def add_flexible_data(flexible_data: data.FlexibleData, token: str = Depen
     return await data.FlexibleData.from_tortoise_orm(flexible_data_in_db)
 
 @router.get("/", response_model=list[data.ContentType])
-async def get_flexible_data():
+async def get_flexible_data(token: str = Depends(oauth2_scheme)):
     return await data.FlexibleData.from_queryset(db.FlexibleData.all())
 
