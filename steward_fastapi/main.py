@@ -8,7 +8,7 @@ app = FastAPI(**config.OPENAPI.dict())
 
 register_tortoise(app=app, config=config.TORTOISE_ORM)
 
-app.include_router(router=routers.content_router)
 app.include_router(router=routers.authentication_router)
+app.include_router(router=routers.content_router, prefix='/content')
 app.include_router(router=routers.flexible_data_router, prefix='/flexible_data')
 
