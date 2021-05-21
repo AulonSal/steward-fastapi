@@ -39,8 +39,7 @@ class Content(Model):
             related_name='content',
         )
     url = fields.CharField(max_length=300, unique=True)
-    # TODO: Fix pydantic_model_creator error with default factory
-    # date = fields.DatetimeField(default=timezone.now)
+    date = fields.DatetimeField(auto_now_add=True)
 
     id = fields.IntField(pk=True)
 
