@@ -22,3 +22,5 @@ AgentOut = pydantic_model_creator(database.Agent, name='AgentOut', exclude=('has
 class AgentIn(pydantic_model_creator(database.Agent, name='AgentIn', exclude=('hashed_password',))):
     password: str
 
+FlexibleData = pydantic_model_creator(database.FlexibleData, name='FlexibleData')
+
