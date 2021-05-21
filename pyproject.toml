@@ -9,10 +9,10 @@ python = "^3.9"
 fastapi = {extras = ["all"], version = "^0.63.0"}
 uvicorn = "^0.13.3"
 asyncpg = "^0.22.0"
-aerich = {path = "dist/aerich-0.5.1.tar.gz"}
 tortoise-orm = "^0.16.21"
 python-jose = {extras = ["cryptography"], version = "^3.2.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+aerich = "^0.5.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
