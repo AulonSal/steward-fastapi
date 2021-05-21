@@ -14,6 +14,8 @@ ContentIn = pydantic_model_creator(database.Content, name='ContentIn', exclude_r
 ContentSourceIn = pydantic_model_creator(database.ContentSource, name='ContentSourceIn')
 ContentTypeIn = pydantic_model_creator(database.ContentType, name='ContentTypeIn')
 
+ContentOut = pydantic_model_creator(database.Content, name='ContentOut', exclude_readonly=True)
+
 Agent = pydantic_model_creator(database.Agent, name='Agent')
 AgentOut = pydantic_model_creator(database.Agent, name='AgentOut', exclude=('hashed_password',))
 

@@ -33,9 +33,9 @@ async def add_content(content: data.ContentIn, token: str = Depends(oauth2_schem
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail='Content Already Exists') from e
     return await data.Content.from_tortoise_orm(content_in_db)
 
-@router.get("/", response_model=list[data.Content])
+@router.get("/", response_model=list[data.ContentOut])
 async def get_content():
-    return await data.Content.from_queryset(db.Content.all())
+    return await data.ContentOut.from_queryset(db.Content.all())
 
 @router.get("/type", response_model=list[data.ContentType])
 async def get_types():
