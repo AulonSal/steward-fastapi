@@ -1,6 +1,4 @@
-# from zoneinfo import ZoneInfo
-
-from tortoise import fields, timezone
+from tortoise import fields
 from tortoise.models import Model
 
 
