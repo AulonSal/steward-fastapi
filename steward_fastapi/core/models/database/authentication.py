@@ -1,7 +1,7 @@
 from tortoise import fields
+from tortoise.contrib.pydantic.creator import PydanticMeta
 from tortoise.models import Model
 
-from tortoise.contrib.pydantic.creator import PydanticMeta
 
 class Agent(Model):
     username = fields.CharField(max_length=50, pk=True)

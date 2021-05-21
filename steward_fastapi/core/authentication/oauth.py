@@ -1,14 +1,15 @@
 from datetime import datetime, timedelta
-from typing import Optional, Union, Literal
+from typing import Literal, Optional, Union
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from steward_fastapi.config.config import JWT_SECRET_KEY
-from steward_fastapi.core.models.validation import Agent
-from steward_fastapi.core.models.database import Agent as AgentDB
 from passlib.context import CryptContext
 from pydantic import BaseModel
+
+from steward_fastapi.config.config import JWT_SECRET_KEY
+from steward_fastapi.core.models.database import Agent as AgentDB
+from steward_fastapi.core.models.validation import Agent
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 40

@@ -1,7 +1,10 @@
-from tortoise import Tortoise
-from steward_fastapi.config.database import CONFIG
-from functools import wraps
 import atexit
+from functools import wraps
+
+from tortoise import Tortoise
+
+from steward_fastapi.config.database import CONFIG
+
 
 # Really these two are for ipython
 # TODO: Handle cleanup

@@ -6,18 +6,14 @@ from typing import Union
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 
-from steward_fastapi.core.authentication import (
-        ACCESS_TOKEN_EXPIRE_MINUTES,
-        authenticate_agent,
-        create_access_token,
-        get_current_active_agent,
-        get_current_agent,
-        hash_password, oauth2_scheme
-    )
-
-from steward_fastapi.core.models.validation import Agent, AgentIn, AgentOut
+from steward_fastapi.core.authentication import (ACCESS_TOKEN_EXPIRE_MINUTES,
+                                                 authenticate_agent,
+                                                 create_access_token,
+                                                 get_current_active_agent,
+                                                 get_current_agent,
+                                                 hash_password, oauth2_scheme)
 from steward_fastapi.core.models.database import Agent as AgentDB
-
+from steward_fastapi.core.models.validation import Agent, AgentIn, AgentOut
 
 router = APIRouter()
 
