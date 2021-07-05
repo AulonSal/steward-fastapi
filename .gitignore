@@ -134,9 +134,6 @@ dmypy.json
 # Vim
 .vim
 
-# Config
-config.py
-
 # Setup
 setup
 

@@ -1,7 +1,7 @@
 """Config of DB"""
 
 from steward_fastapi.config.base import INSTANCE_DIR
-from steward_fastapi.config.config import POSTGRES_CREDENTIALS
+from steward_fastapi.config.config import DEFAULT_CONNECTION
 
 TIMEZONE = 'Asia/Kolkata'
 USE_TIMEZONE = True
@@ -28,18 +28,18 @@ CONFIG = {
                             'file_path': SQLITE_DB_PATH,
                         },
                 },
-            'postgres':
-                {
-                    'engine': 'tortoise.backends.asyncpg',
-                    'credentials': POSTGRES_CREDENTIALS.copy(),
-                },
+            # 'postgres':
+            #     {
+            #         'engine': 'tortoise.backends.asyncpg',
+            #         'credentials': POSTGRES_CREDENTIALS.copy(),
+            #     },
         },
     'apps':
         {
             'models':
                 {
                     'models': DB_MODELS,
-                    'default_connection': 'postgres',
+                    'default_connection': DEFAULT_CONNECTION,
                 },
         },
     'use_tz': USE_TIMEZONE,
