@@ -47,7 +47,7 @@ async def get_sources(token: str = Depends(oauth2_scheme)):
 
 
 @router.get("/search", response_model=list[data.ContentOut])
-async def search_endpoint(string: str, _type: Optional[str] = None, source: Optional[str] = None):
+async def search_endpoint(string: str, _type: Optional[str] = None, source: Optional[str] = None, token: str = Depends(oauth2_scheme)):
     try:
         return await data.ContentOut.from_queryset(search_content_query(string, _type, source))
     except ValueError as exception:
