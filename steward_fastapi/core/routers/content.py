@@ -47,23 +47,24 @@ async def get_sources(token: str = Depends(oauth2_scheme)):
 
 
 @router.get("/search", response_model=list[data.ContentOut])
-async def search_endpoint(string: str, _type: Optional[str] = None, source: Optional[str] = None, token: str = Depends(oauth2_scheme)):
+async def search_endpoint(string: str, type: Optional[str] = None, source: Optional[str] = None, token: str = Depends(oauth2_scheme)):
     try:
-        return await data.ContentOut.from_queryset(search_content_query(string, _type, source))
+        return await data.ContentOut.from_queryset(await search_content_query(string, type, source))
     except ValueError as exception:
-        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=exception)
+        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=str(exception))
 
 
-def search_content_query(string: str, _type: Optional[str] = None, source: Optional[str] = None):
+# Does python not have a tool which can tell me all possible exceptions here? even just a best effort?
+async def search_content_query(string: str, _type: Optional[str] = None, source: Optional[str] = None):
     try:
         if _type is not None:
-            type_in_db = db.ContentType.get(name=_type)
+            type_in_db = await db.ContentType.get(name=_type)
     except DoesNotExist:
-        raise ValueError(f'''ContentType {_type} does not exist''')
+        raise ValueError(f'''ContentType {type} does not exist''')
 
     try:
         if source is not None:
-            source_in_db = db.ContentSource.get(name=source)
+            source_in_db = await db.ContentSource.get(name=source)
     except DoesNotExist:
         raise ValueError(f'''ContentSource {source} does not exist''')
 
