@@ -1,7 +1,8 @@
 # from typing import Optional
 from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
-from tortoise.exceptions import IntegrityError
+from tortoise.exceptions import IntegrityError, DoesNotExist
+from typing import Optional
 
 import steward_fastapi.core.models.database as db
 import steward_fastapi.core.models.validation as data
@@ -44,6 +45,34 @@ async def get_types(token: str = Depends(oauth2_scheme)):
 async def get_sources(token: str = Depends(oauth2_scheme)):
     return await data.ContentSource.from_queryset(db.ContentSource.all())
 
+
+@router.get("/search", response_model=list[data.ContentOut])
+async def search_endpoint(string: str, _type: Optional[str] = None, source: Optional[str] = None):
+    try:
+        return await data.ContentOut.from_queryset(search_content_query(string, _type, source))
+    except ValueError as exception:
+        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=exception)
+
+
+def search_content_query(string: str, _type: Optional[str] = None, source: Optional[str] = None):
+    try:
+        if _type is not None:
+            type_in_db = db.ContentType.get(name=_type)
+    except DoesNotExist:
+        raise ValueError(f'''ContentType {_type} does not exist''')
+
+    try:
+        if source is not None:
+            source_in_db = db.ContentSource.get(name=source)
+    except DoesNotExist:
+        raise ValueError(f'''ContentSource {source} does not exist''')
+
+    query = db.Content.filter(meta__icontains=string)  # meta__search just returns everything
+    if _type is not None:
+        query = query.filter(type=type_in_db)
+    if source is not None:
+        query = query.filter(source=source_in_db)
+    return query
 
 # @router.get("/items/{item_id}")
 # async def read_item(item_id: int):
